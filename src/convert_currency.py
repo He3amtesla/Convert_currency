@@ -1,6 +1,9 @@
 import requests
+from cachetools import cached, TTLCache
 
+ttl_cache =TTLCache(maxsize=299, ttl= 60*60*3)
 
+@cached(ttl_cache)
 def get_exchange_money(base_money: str, target_money: str) -> float:
     response = requests.get(f"https://v6.exchangerate-api.com/v6/94279738aa864d272c0be4e0/latest/{base_money}")
     if response.status_code != 200:
@@ -9,8 +12,12 @@ def get_exchange_money(base_money: str, target_money: str) -> float:
     with open("currency.py",'w') as file:
         l = list(response.json()["conversion_rates"].keys())
         file.write("currencyes =" + str(l))
+        
+    time_last_update = response.json()["time_last_update_utc"]
+    rate = response.json()["conversion_rates"][target_money]
     
-    return response.json()["conversion_rates"][target_money]
+    return rate, time_last_update
+
 
 
 def convert_currency(amount_of_currency: float, total_number: float) -> float:
