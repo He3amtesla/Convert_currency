@@ -21,7 +21,7 @@ def get_exchange_money(base_money: str, target_money: str) -> float:
 
 
 def convert_currency(amount_of_currency: float, total_number: float) -> float:
-    return amount_of_currency * total_number
+    return (amount_of_currency * total_number)
 
 
 if __name__ == "__main__":
@@ -29,6 +29,6 @@ if __name__ == "__main__":
     target_money = input("Enter Target money: ")
     total_number = float(input("Enter Total Number Target money: "))
     
-    amount_of_currency_of_currency = get_exchange_money(base_money, target_money)
-    cc = convert_currency((amount_of_currency_of_currency), total_number)
-    print(cc)
+    amount_of_currency_of_currency, time = get_exchange_money(base_money, target_money)
+    cc = convert_currency(amount_of_currency_of_currency, total_number)
+    print((cc))
